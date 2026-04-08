@@ -134,7 +134,7 @@ app.get('/profile/:first/:last', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(3000, () => console.log("API running at http://localhost:3000"));
 
 
 // Route param middleware example: /users/42
