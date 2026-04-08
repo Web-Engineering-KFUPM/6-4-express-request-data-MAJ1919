@@ -124,13 +124,37 @@ app.get("/echo", (req,res)=>{ name = req.query.name; age = req.query.age;
 
  
 // Route params: /profile/First/Last
-
+app.get('/profile/:first/:last', (req, res) => {
+    const { first, last } = req.params;
+    res.json({
+        ok: true,
+        fullName: `${first} ${last}`
+    });
+});
 
 // Route param middleware example: /users/42
+app.param('userId', (req, res, next, userId) => {
+    const userIdNum = Number(userId);
 
+    if (isNaN(userIdNum) || userIdNum <= 0) {
+        return res.status(400).json({ 
+            ok: false, 
+            error: "userId must be positive number" 
+        });
+    }
+
+    req.userIdNum = userIdNum;
+    next();
+});
 
 // Route params: /users/:userId route
 
+app.get('/users/:userId', (req, res) => {
+    res.json({
+        ok: true,
+        userId: req.userIdNum
+    });
+});
 
 // Start the server by listening
 
